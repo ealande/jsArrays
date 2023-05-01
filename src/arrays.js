@@ -50,16 +50,19 @@ const frontEndStudents = students2.every(function(item){
 console.log(frontEndStudents);
 
 const someFrontEndStudents = students2.some(function(item){
-    return item.Class === 'Bacnend' && item.Class === "Frontend"
+    return item.Class === 'Backend' && item.Class === "Frontend"
 })
 
 console.log(someFrontEndStudents);
 
 const backEndStudents = students2.filter(function(item) {
     return item.Course === 'Backend'
-})
+});
+
+const backEndStudentsFilter2 = (students) => students2.Course === 'Backend';
 
 console.log(backEndStudents);
+console.log (backEndStudentsFilter2());
 
 const nums = [10, 20, 30, 10];
 

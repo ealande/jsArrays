@@ -41,13 +41,17 @@ var frontEndStudents = students2.every(function (item) {
 });
 console.log(frontEndStudents);
 var someFrontEndStudents = students2.some(function (item) {
-  return item.Class === 'Bacnend' && item.Class === "Frontend";
+  return item.Class === 'Backend' && item.Class === "Frontend";
 });
 console.log(someFrontEndStudents);
 var backEndStudents = students2.filter(function (item) {
   return item.Course === 'Backend';
 });
+var backEndStudentsFilter2 = function backEndStudentsFilter2(students) {
+  return students2.Course === 'Backend';
+};
 console.log(backEndStudents);
+console.log(backEndStudentsFilter2());
 var nums = [10, 20, 30, 10];
 var sum = nums.reduce(function (acumulator, currentItem) {
   acumulator += currentItem;
