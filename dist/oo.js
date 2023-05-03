@@ -11,9 +11,16 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+var _hp = /*#__PURE__*/new WeakMap();
 /*function Pokemon (name, type){
     this.name = name;
     this.type = type;
@@ -24,8 +31,10 @@ const pikachu = new Pokemon("Pikachu", "Electric");
 var Pokemon = /*#__PURE__*/function () {
   function Pokemon(pokemonName, pokemonType) {
     _classCallCheck(this, Pokemon);
-    _defineProperty(this, "name", '');
-    _defineProperty(this, "type", '');
+    _classPrivateFieldInitSpec(this, _hp, {
+      writable: true,
+      value: 100
+    });
     this.name = pokemonName;
     this.type = pokemonType;
   }
@@ -33,6 +42,16 @@ var Pokemon = /*#__PURE__*/function () {
     key: "attack",
     value: function attack(attackName) {
       console.log("".concat(this.name, " attacked with ").concat(attackName));
+    }
+  }, {
+    key: "attacked",
+    value: function attacked() {
+      _classPrivateFieldSet(this, _hp, _classPrivateFieldGet(this, _hp) - 10);
+    }
+  }, {
+    key: "showHp",
+    value: function showHp() {
+      console.log(_classPrivateFieldGet(this, _hp));
     }
   }]);
   return Pokemon;
@@ -53,6 +72,10 @@ var Pikachu = /*#__PURE__*/function (_Pokemon) {
   return Pikachu;
 }(Pokemon);
 var ashPikachu = new Pikachu('Pikachu', 'Electric2');
+ashPikachu.attacked();
+console.log(ashPikachu.hp);
+ashPikachu.attack();
+ashPikachu.showHp();
 var pikachu = new Pokemon('Pikachu', 'Electric');
 pikachu.attack("Thunderstruck");
 /*pikachu.name = 'Pikachu';

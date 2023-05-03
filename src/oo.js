@@ -9,8 +9,7 @@ const pikachu = new Pokemon("Pikachu", "Electric");
 
 
 class Pokemon {
-    name = '';
-    type = '';
+    #hp = 100;
 
     constructor(pokemonName, pokemonType){
         this.name = pokemonName;
@@ -19,6 +18,14 @@ class Pokemon {
 
     attack(attackName){
         console.log (`${this.name} attacked with ${attackName}`)
+    }
+
+    attacked(){
+        this.#hp -= 10;
+    }
+
+    showHp(){
+        console.log(this.#hp);
     }
 }
 
@@ -30,9 +37,16 @@ class Pikachu extends Pokemon {
     attack(){
         console.log (`${this.name} attacked with thunderstruck`)
     }
+
 }
 
 const ashPikachu = new Pikachu ('Pikachu', 'Electric2')
+
+ashPikachu.attacked();
+console.log(ashPikachu.hp);
+ashPikachu.attack();
+ashPikachu.showHp();
+
 const pikachu = new Pokemon('Pikachu', 'Electric');
 pikachu.attack("Thunderstruck")
 /*pikachu.name = 'Pikachu';
